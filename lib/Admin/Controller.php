@@ -102,8 +102,10 @@ class Controller
      */
     public function dispatch($action)
     {
-        // Verify CSRF Token For POST Requests
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Verify CSRF Token Only For Our Form/AJAX Submissions
+        // Skip For WHMCS Internal POST Redirects (e.g. Password Confirmation)
+        $hasCsrfToken = !empty($_POST['csrf_token']) || !empty($_SERVER['HTTP_X_CSRF_TOKEN']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $hasCsrfToken) {
             if (!$this->verifyCsrfToken()) {
                 echo '<div class="alert alert-danger">Security Token Validation Failed. Please Try Again.</div>';
                 return;
