@@ -139,7 +139,7 @@ class Controller
     protected function render($template, array $data = [])
     {
         $data['moduleLink'] = $this->moduleLink;
-        $data['version'] = $this->vars['version'] ?? '1.0.0';
+        $data['version'] = $this->vars['version'] ?? '1.0.1';
         $data['csrfToken'] = $this->generateCsrfToken();
         $data['csrfTokenField'] = $this->getCsrfTokenField();
 
