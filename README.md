@@ -11,6 +11,8 @@ agents see the full customer context in every conversation.
 
 ![Client Attributes](multilat-chatwoot-addon-for-whmcs-attribute.jpg)
 
+![Attributes on Chatwoot Sidebar](multilat-chatwoot-addon-for-whmcs-attributes-on-sidebar.png)
+
 **Compatible With**: WHMCS 8.x — 9.x and Chatwoot 4.x+
 
 ## Features
