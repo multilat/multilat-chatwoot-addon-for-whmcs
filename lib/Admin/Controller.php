@@ -107,7 +107,9 @@ class Controller
         $hasCsrfToken = !empty($_POST['csrf_token']) || !empty($_SERVER['HTTP_X_CSRF_TOKEN']);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $hasCsrfToken) {
             if (!$this->verifyCsrfToken()) {
-                echo '<div class="alert alert-danger">Security Token Validation Failed. Please Try Again.</div>';
+                // Regenerate Token and Redirect Back To Avoid Dead-End Error
+                unset($_SESSION['mc_csrf_token']);
+                header('Location: ' . $this->moduleLink);
                 return;
             }
         }
