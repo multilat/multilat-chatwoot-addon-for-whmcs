@@ -107,9 +107,10 @@ class Controller
         $hasCsrfToken = !empty($_POST['csrf_token']) || !empty($_SERVER['HTTP_X_CSRF_TOKEN']);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $hasCsrfToken) {
             if (!$this->verifyCsrfToken()) {
-                // Regenerate Token and Redirect Back To Avoid Dead-End Error
+                // Token Stale (Session Expired) — Trigger WHMCS Native Password Confirmation
                 unset($_SESSION['mc_csrf_token']);
-                header('Location: ' . $this->moduleLink);
+                unset($_SESSION['AuthConfirmationTimestamp']);
+                echo '<script>window.location.href = "' . addslashes($this->moduleLink) . '";</script>';
                 return;
             }
         }
