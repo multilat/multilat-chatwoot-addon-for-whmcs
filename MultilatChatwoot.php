@@ -125,6 +125,89 @@ function MultilatChatwoot_provision_defaults()
 }
 
 /**
+ * Backup Settings To tblconfiguration (Survives Deactivation)
+ *
+ * @return void
+ */
+function MultilatChatwoot_backup_settings()
+{
+    try {
+        $settings = Capsule::table('tbladdonmodules')
+            ->where('module', 'MultilatChatwoot')
+            ->pluck('value', 'setting')
+            ->toArray();
+
+        if (empty($settings)) {
+            return;
+        }
+
+        $json = json_encode($settings);
+        $exists = Capsule::table('tblconfiguration')
+            ->where('setting', 'MultilatChatwootBackup')
+            ->exists();
+
+        if ($exists) {
+            Capsule::table('tblconfiguration')
+                ->where('setting', 'MultilatChatwootBackup')
+                ->update(['value' => $json]);
+        } else {
+            Capsule::table('tblconfiguration')->insert([
+                'setting' => 'MultilatChatwootBackup',
+                'value'   => $json,
+            ]);
+        }
+    } catch (\Exception $e) {
+        logActivity('Multilat Chatwoot: Settings Backup Failed — ' . $e->getMessage());
+    }
+}
+
+/**
+ * Restore Settings From tblconfiguration Backup
+ *
+ * @return void
+ */
+function MultilatChatwoot_restore_settings()
+{
+    try {
+        $row = Capsule::table('tblconfiguration')
+            ->where('setting', 'MultilatChatwootBackup')
+            ->first();
+
+        if (!$row || empty($row->value)) {
+            return;
+        }
+
+        $settings = json_decode($row->value, true);
+        if (!is_array($settings) || empty($settings)) {
+            return;
+        }
+
+        foreach ($settings as $setting => $value) {
+            $exists = Capsule::table('tbladdonmodules')
+                ->where('module', 'MultilatChatwoot')
+                ->where('setting', $setting)
+                ->exists();
+
+            if (!$exists) {
+                Capsule::table('tbladdonmodules')->insert([
+                    'module'  => 'MultilatChatwoot',
+                    'setting' => $setting,
+                    'value'   => $value,
+                ]);
+            }
+        }
+
+        // Remove Backup After Successful Restore
+        Capsule::table('tblconfiguration')
+            ->where('setting', 'MultilatChatwootBackup')
+            ->delete();
+
+    } catch (\Exception $e) {
+        logActivity('Multilat Chatwoot: Settings Restore Failed — ' . $e->getMessage());
+    }
+}
+
+/**
  * Module Activation
  *
  * @return array
@@ -149,7 +232,10 @@ function MultilatChatwoot_activate()
         }
         @chmod($paths['hook_dest'], 0644);
 
-        // Set Default Settings
+        // Restore Saved Settings From Previous Deactivation (If Any)
+        MultilatChatwoot_restore_settings();
+
+        // Provision Defaults For Any Missing Settings
         MultilatChatwoot_provision_defaults();
 
         logActivity('Multilat Chatwoot: Module Activated Successfully');
@@ -169,6 +255,9 @@ function MultilatChatwoot_activate()
  */
 function MultilatChatwoot_deactivate()
 {
+    // Backup Settings To tblconfiguration Before WHMCS Wipes tbladdonmodules
+    MultilatChatwoot_backup_settings();
+
     $paths = MultilatChatwoot_get_paths();
 
     if (file_exists($paths['hook_dest']) && !@unlink($paths['hook_dest'])) {
