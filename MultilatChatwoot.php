@@ -8,7 +8,7 @@
  * @package    MultilatChatwoot
  * @author     Multilat <https://multilat.xyz>
  * @copyright  Copyright (c) Multilat
- * @version    1.2.1
+ * @version    1.2.2
  */
 
 if (!defined('WHMCS')) {
@@ -27,7 +27,7 @@ function MultilatChatwoot_config()
     return [
         'name' => 'Multilat Chatwoot',
         'description' => 'Adds Chatwoot Live Chat Widget With Client Identity and Billing Attributes',
-        'version' => '1.2.1',
+        'version' => '1.2.2',
         'author' => '<a href="https://multilat.xyz" target="_blank"><img src="../modules/addons/MultilatChatwoot/assets/images/author-logo.png" alt="Multilat" style="max-height: 14px; vertical-align: middle;"></a>',
         'fields' => [],
     ];

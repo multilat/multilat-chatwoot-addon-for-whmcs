@@ -229,6 +229,32 @@ if (!defined('WHMCS')) {
     </div>
 </form>
 
+<!-- Custom Toggle Button -->
+<div class="mc-card">
+    <div class="mc-card-header">
+        <span class="mc-card-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+            <i class="fas fa-mouse-pointer"></i>
+        </span>
+        <h3>Custom Toggle Button</h3>
+    </div>
+    <div class="mc-card-body">
+        <div class="mc-info-box" style="margin-top: 0;">
+            <h4><i class="fas fa-info-circle"></i> Open or Close The Widget From Any Element</h4>
+            <p>No extra JavaScript is needed. Use either method below:</p>
+
+            <p style="margin-top: 12px; font-weight: 600;">Method 1: Link With <code>#chatbox-toggle</code> (Recommended For Links)</p>
+            <pre style="background: #e0f2fe; padding: 10px 14px; border-radius: 8px; margin: 8px 0; overflow-x: auto; font-size: 12px; line-height: 1.6;"><code>&lt;a href="#chatbox-toggle"&gt;Chat With Us&lt;/a&gt;
+&lt;a href="#chatbox-toggle"&gt;Need Help?&lt;/a&gt;</code></pre>
+
+            <p style="font-weight: 600;">Method 2: CSS Class <code>chatbox-toggle</code> (For Buttons and Elements)</p>
+            <pre style="background: #e0f2fe; padding: 10px 14px; border-radius: 8px; margin: 8px 0; overflow-x: auto; font-size: 12px; line-height: 1.6;"><code>&lt;button class="chatbox-toggle"&gt;Chat With Us&lt;/button&gt;
+&lt;div class="chatbox-toggle"&gt;Support&lt;/div&gt;</code></pre>
+
+            <p>Both methods work with any theme — use <code>#chatbox-toggle</code> as the link URL, or add <code>chatbox-toggle</code> as a CSS class to any button or element in your WHMCS template.</p>
+        </div>
+    </div>
+</div>
+
 <script>
 // Toggle Feature Card on Click
 function mcToggleFeature(card) {
