@@ -345,6 +345,13 @@ add_hook('ClientAreaFooterOutput', 1, function ($vars) {
   } else {
     window.addEventListener('load', loadChatwoot);
   }
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('.chatbox-toggle, a[href="#chatbox-toggle"]');
+    if (el && window.\$chatwoot) {
+      e.preventDefault();
+      window.\$chatwoot.toggle();
+    }
+  });
 })();
 </script>
 SCRIPT;
@@ -363,6 +370,13 @@ SCRIPT;
     });
   };
   document.head.appendChild(s);
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('.chatbox-toggle, a[href="#chatbox-toggle"]');
+    if (el && window.\$chatwoot) {
+      e.preventDefault();
+      window.\$chatwoot.toggle();
+    }
+  });
 })();
 </script>
 SCRIPT;
