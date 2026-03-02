@@ -11,7 +11,7 @@ if (!defined('WHMCS')) {
 
 $currentAction = $_GET['action'] ?? 'general';
 ?>
-<link rel="stylesheet" href="../modules/addons/MultilatChatwoot/assets/css/admin.css">
+<link rel="stylesheet" href="../modules/addons/MultilatChatwoot/assets/css/admin.css?v=<?php echo urlencode($version); ?>">
 
 <script>
 function toggleKeyVisibility(inputId) {

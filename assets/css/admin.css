@@ -499,8 +499,10 @@ h1:not(.mc-header-title) {
 
 .mc-input {
     width: 100%;
-    padding: 10px 14px;
+    height: 40px;
+    padding: 0 14px;
     font-size: 14px;
+    line-height: 38px;
     border: 1px solid var(--mc-border);
     border-radius: 8px;
     background: white;
