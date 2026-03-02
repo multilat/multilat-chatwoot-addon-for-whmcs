@@ -165,6 +165,68 @@ if (!defined('WHMCS')) {
             </div>
         </div>
     </div>
+
+    <!-- Widget Appearance -->
+    <div class="mc-card">
+        <div class="mc-card-header">
+            <span class="mc-card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                <i class="fas fa-paint-brush"></i>
+            </span>
+            <h3>Widget Appearance</h3>
+        </div>
+        <div class="mc-card-body">
+            <div class="mc-grid mc-grid-2">
+                <div class="mc-form-group">
+                    <label for="locale">Locale</label>
+                    <select id="locale" name="locale" class="mc-input mc-form-input">
+                        <option value="" <?php echo ($settings['locale'] ?? '') === '' ? 'selected' : ''; ?>>Auto (Browser Default)</option>
+                        <option value="ar" <?php echo ($settings['locale'] ?? '') === 'ar' ? 'selected' : ''; ?>>Arabic</option>
+                        <option value="bn" <?php echo ($settings['locale'] ?? '') === 'bn' ? 'selected' : ''; ?>>Bengali</option>
+                        <option value="zh" <?php echo ($settings['locale'] ?? '') === 'zh' ? 'selected' : ''; ?>>Chinese</option>
+                        <option value="nl" <?php echo ($settings['locale'] ?? '') === 'nl' ? 'selected' : ''; ?>>Dutch</option>
+                        <option value="en" <?php echo ($settings['locale'] ?? '') === 'en' ? 'selected' : ''; ?>>English</option>
+                        <option value="fr" <?php echo ($settings['locale'] ?? '') === 'fr' ? 'selected' : ''; ?>>French</option>
+                        <option value="de" <?php echo ($settings['locale'] ?? '') === 'de' ? 'selected' : ''; ?>>German</option>
+                        <option value="hi" <?php echo ($settings['locale'] ?? '') === 'hi' ? 'selected' : ''; ?>>Hindi</option>
+                        <option value="it" <?php echo ($settings['locale'] ?? '') === 'it' ? 'selected' : ''; ?>>Italian</option>
+                        <option value="ja" <?php echo ($settings['locale'] ?? '') === 'ja' ? 'selected' : ''; ?>>Japanese</option>
+                        <option value="ko" <?php echo ($settings['locale'] ?? '') === 'ko' ? 'selected' : ''; ?>>Korean</option>
+                        <option value="pt" <?php echo ($settings['locale'] ?? '') === 'pt' ? 'selected' : ''; ?>>Portuguese</option>
+                        <option value="ru" <?php echo ($settings['locale'] ?? '') === 'ru' ? 'selected' : ''; ?>>Russian</option>
+                        <option value="es" <?php echo ($settings['locale'] ?? '') === 'es' ? 'selected' : ''; ?>>Spanish</option>
+                        <option value="tr" <?php echo ($settings['locale'] ?? '') === 'tr' ? 'selected' : ''; ?>>Turkish</option>
+                    </select>
+                    <p class="mc-help-text">Language For The Chat Widget Interface</p>
+                </div>
+
+                <div class="mc-form-group">
+                    <label for="widget_type">Widget Type</label>
+                    <select id="widget_type" name="widget_type" class="mc-input mc-form-input">
+                        <option value="standard" <?php echo ($settings['widget_type'] ?? 'standard') === 'standard' ? 'selected' : ''; ?>>Standard (Icon Only)</option>
+                        <option value="expanded_bubble" <?php echo ($settings['widget_type'] ?? 'standard') === 'expanded_bubble' ? 'selected' : ''; ?>>Expanded Bubble (Icon + Text)</option>
+                    </select>
+                    <p class="mc-help-text">Standard Shows A Chat Icon. Expanded Bubble Shows An Icon With Text Label.</p>
+                </div>
+
+                <div class="mc-form-group">
+                    <label for="position">Position</label>
+                    <select id="position" name="position" class="mc-input mc-form-input">
+                        <option value="right" <?php echo ($settings['position'] ?? 'right') === 'right' ? 'selected' : ''; ?>>Right</option>
+                        <option value="left" <?php echo ($settings['position'] ?? 'right') === 'left' ? 'selected' : ''; ?>>Left</option>
+                    </select>
+                    <p class="mc-help-text">Which Side of The Screen The Widget Appears on</p>
+                </div>
+
+                <div class="mc-form-group">
+                    <label for="launcher_text">Launcher Text</label>
+                    <input type="text" id="launcher_text" name="launcher_text" class="mc-input mc-form-input"
+                           value="<?php echo htmlspecialchars($settings['launcher_text'] ?? ''); ?>"
+                           placeholder="Chat With Us">
+                    <p class="mc-help-text">Custom Text Shown on The Expanded Bubble. Leave Empty For Default.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 
 <script>

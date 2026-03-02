@@ -41,6 +41,26 @@ add_hook('ClientAreaFooterOutput', 1, function ($vars) {
     $deferLoad = ($settings['defer_load'] ?? 'on') === 'on';
     $hmacToken = $settings['hmac_token'] ?? '';
 
+    // Build chatwootSettings Config
+    $chatwootConfig = ['darkMode' => $darkMode];
+    $locale = $settings['locale'] ?? '';
+    if (!empty($locale)) {
+        $chatwootConfig['locale'] = $locale;
+    }
+    $widgetType = $settings['widget_type'] ?? 'standard';
+    if ($widgetType !== 'standard') {
+        $chatwootConfig['type'] = $widgetType;
+    }
+    $widgetPosition = $settings['position'] ?? 'right';
+    if ($widgetPosition !== 'right') {
+        $chatwootConfig['position'] = $widgetPosition;
+    }
+    $launcherText = $settings['launcher_text'] ?? '';
+    if (!empty($launcherText)) {
+        $chatwootConfig['launcherTitle'] = $launcherText;
+    }
+    $chatwootConfigJs = json_encode($chatwootConfig, JSON_UNESCAPED_UNICODE);
+
     // Load Attribute Overrides
     $overrides = json_decode($settings['attribute_overrides'] ?? '{}', true) ?: [];
 
@@ -312,7 +332,6 @@ add_hook('ClientAreaFooterOutput', 1, function ($vars) {
     // Escape Values For JavaScript (json_encode Includes Quotes)
     $baseUrlJs = json_encode($baseUrl);
     $tokenJs = json_encode($websiteToken);
-    $darkModeJs = json_encode($darkMode);
 
     // Build Ready Handler
     $readyHandler = '';
@@ -328,7 +347,7 @@ add_hook('ClientAreaFooterOutput', 1, function ($vars) {
 <script>
 (function() {
   function loadChatwoot() {
-    window.chatwootSettings = { darkMode: {$darkModeJs} };{$readyHandler}
+    window.chatwootSettings = {$chatwootConfigJs};{$readyHandler}
     var s = document.createElement('script');
     s.src = {$baseUrlJs} + '/packs/js/sdk.js';
     s.defer = true;
@@ -359,7 +378,7 @@ SCRIPT;
         $script = <<<SCRIPT
 <script>
 (function() {
-  window.chatwootSettings = { darkMode: {$darkModeJs} };{$readyHandler}
+  window.chatwootSettings = {$chatwootConfigJs};{$readyHandler}
   var s = document.createElement('script');
   s.src = {$baseUrlJs} + '/packs/js/sdk.js';
   s.async = true;

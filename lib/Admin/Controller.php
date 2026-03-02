@@ -142,7 +142,7 @@ class Controller
     protected function render($template, array $data = [])
     {
         $data['moduleLink'] = $this->moduleLink;
-        $data['version'] = $this->vars['version'] ?? '1.1.0';
+        $data['version'] = $this->vars['version'] ?? '1.2.0';
         $data['csrfToken'] = $this->generateCsrfToken();
         $data['csrfTokenField'] = $this->getCsrfTokenField();
 
@@ -220,6 +220,13 @@ class Controller
                     'website_token'  => trim($_POST['website_token'] ?? ''),
                     'dark_mode'      => isset($_POST['dark_mode']) ? 'auto' : 'light',
                     'defer_load'     => isset($_POST['defer_load']) ? 'on' : '',
+                    'locale'         => in_array($_POST['locale'] ?? '', ['', 'ar', 'bn', 'zh', 'nl', 'en', 'fr', 'de', 'hi', 'it', 'ja', 'ko', 'pt', 'ru', 'es', 'tr'], true)
+                                        ? $_POST['locale'] : '',
+                    'widget_type'    => in_array($_POST['widget_type'] ?? '', ['standard', 'expanded_bubble'], true)
+                                        ? $_POST['widget_type'] : 'standard',
+                    'position'       => in_array($_POST['position'] ?? '', ['left', 'right'], true)
+                                        ? $_POST['position'] : 'right',
+                    'launcher_text'  => trim($_POST['launcher_text'] ?? ''),
                     'hmac_token'     => trim($_POST['hmac_token'] ?? ''),
                     // Conversation Attributes
                     'conv_attr_source'       => isset($_POST['conv_attr_source']) ? 'on' : '',
